@@ -7,15 +7,15 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - 8001:8001
+      - 8000:8000
     environment:
       - WEAVIATE_URL_VERBA=$WEAVIATE_URL_VERBA
       - OPENAI_API_KEY=$OPENAI_API_KEY
-      - WEAVIATE_API_KEY_VERBA=$WEAVIATE_API_KEY
+      - WEAVIATE_API_KEY_VERBA=$WEAVIATE_API_KEY_VERBA
       - COHERE_API_KEY=$COHERE_API_KEY
       - UNSTRUCTURED_API_KEY=$UNSTRUCTURED_API_KEY
       - GITHUB_TOKEN=$GITHUB_TOKEN
-      - HF_TOKEN=$HUGGINGFACE_API_KEY
+      - HF_TOKEN=$HF_TOKEN
       - LLAMA2-7B-CHAT-HF=True
 
     volumes:
@@ -35,18 +35,18 @@ services:
       - --host
       - 0.0.0.0
       - --port
-      - '8081'
+      - '8080'
       - --scheme
       - http
     image: semitechnologies/weaviate:1.21.2
     ports:
-      - 8081:8081
-      - 3001:8081
+      - 8080:8080
+      - 3000:8000
     volumes:
       - weaviate_data:/var/lib/weaviate
     restart: on-failure:0
     healthcheck:
-      test: wget --no-verbose --tries=3 --spider http://localhost:8081/v1/.well-known/ready || exit 1
+      test: wget --no-verbose --tries=3 --spider http://localhost:8080/v1/.well-known/ready || exit 1
       interval: 5s
       timeout: 10s
       retries: 5
